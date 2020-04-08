@@ -1569,9 +1569,9 @@ proc sort*[A, B](t: var OrderedTable[A, B], cmp: proc (x, y: (A, B)): int,
     for i, c in "cab":
       a[c] = 10*i
     doAssert a == {'c': 0, 'a': 10, 'b': 20}.toOrderedTable
-    a.sort(system.cmp)
+    a.sort(system.cmp[(char, int)])
     doAssert a == {'a': 10, 'b': 20, 'c': 0}.toOrderedTable
-    a.sort(system.cmp, order = SortOrder.Descending)
+    a.sort(system.cmp[(char, int)], order = SortOrder.Descending)
     doAssert a == {'c': 0, 'b': 20, 'a': 10}.toOrderedTable
 
   var list = t.first
@@ -2033,9 +2033,9 @@ proc sort*[A, B](t: OrderedTableRef[A, B], cmp: proc (x, y: (A, B)): int,
     for i, c in "cab":
       a[c] = 10*i
     doAssert a == {'c': 0, 'a': 10, 'b': 20}.newOrderedTable
-    a.sort(system.cmp)
+    a.sort(system.cmp[(char, int)])
     doAssert a == {'a': 10, 'b': 20, 'c': 0}.newOrderedTable
-    a.sort(system.cmp, order = SortOrder.Descending)
+    a.sort(system.cmp[(char, int)], order = SortOrder.Descending)
     doAssert a == {'c': 0, 'b': 20, 'a': 10}.newOrderedTable
 
   t[].sort(cmp, order = order)
