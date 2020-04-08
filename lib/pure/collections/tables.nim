@@ -217,6 +217,7 @@
 ## * `hashes module<hashes.html>`_ for helper functions for hashing
 
 
+{.push raises: [].}
 import hashes, math, algorithm
 
 include "system/inclrtl"
@@ -251,7 +252,7 @@ template dataLen(t): untyped = len(t.data)
 include tableimpl
 
 template get(t, key): untyped =
-  ## retrieves the value at ``t[key]``. The value can be modified.
+  ## Retrieves the value at ``t[key]``. The value can be modified.
   ## If ``key`` is not in ``t``, the ``KeyError`` exception is raised.
   mixin rawGet
   var hc: Hash
@@ -338,7 +339,7 @@ proc toTable*[A, B](pairs: openArray[(A, B)]): Table[A, B] =
   result = initTable[A, B](rightSize(pairs.len))
   for key, val in items(pairs): result[key] = val
 
-proc `[]`*[A, B](t: Table[A, B], key: A): B =
+proc `[]`*[A, B](t: Table[A, B], key: A): B {.raises: KeyError.} =
   ## Retrieves the value at ``t[key]``.
   ##
   ## If ``key`` is not in ``t``, the ``KeyError`` exception is raised.
@@ -361,7 +362,7 @@ proc `[]`*[A, B](t: Table[A, B], key: A): B =
       echo a['z']
   get(t, key)
 
-proc `[]`*[A, B](t: var Table[A, B], key: A): var B =
+proc `[]`*[A, B](t: var Table[A, B], key: A): var B {.raises: KeyError.} =
   ## Retrieves the value at ``t[key]``. The value can be modified.
   ##
   ## If ``key`` is not in ``t``, the ``KeyError`` exception is raised.
@@ -821,7 +822,7 @@ proc newTableFrom*[A, B, C](collection: A, index: proc(x: B): C): <//>TableRef[C
   for item in collection:
     result[index(item)] = item
 
-proc `[]`*[A, B](t: TableRef[A, B], key: A): var B =
+proc `[]`*[A, B](t: TableRef[A, B], key: A): var B {.raises: KeyError.} =
   ## Retrieves the value at ``t[key]``.
   ##
   ## If ``key`` is not in ``t``, the  ``KeyError`` exception is raised.
@@ -1312,7 +1313,7 @@ proc toOrderedTable*[A, B](pairs: openArray[(A, B)]): OrderedTable[A, B] =
   result = initOrderedTable[A, B](rightSize(pairs.len))
   for key, val in items(pairs): result[key] = val
 
-proc `[]`*[A, B](t: OrderedTable[A, B], key: A): B =
+proc `[]`*[A, B](t: OrderedTable[A, B], key: A): B {.raises: KeyError.} =
   ## Retrieves the value at ``t[key]``.
   ##
   ## If ``key`` is not in ``t``, the  ``KeyError`` exception is raised.
@@ -1336,7 +1337,7 @@ proc `[]`*[A, B](t: OrderedTable[A, B], key: A): B =
 
   get(t, key)
 
-proc `[]`*[A, B](t: var OrderedTable[A, B], key: A): var B =
+proc `[]`*[A, B](t: var OrderedTable[A, B], key: A): var B {.raises: KeyError.} =
   ## Retrieves the value at ``t[key]``. The value can be modified.
   ##
   ## If ``key`` is not in ``t``, the ``KeyError`` exception is raised.
@@ -1807,7 +1808,7 @@ proc newOrderedTable*[A, B](pairs: openArray[(A, B)]): <//>OrderedTableRef[A, B]
   for key, val in items(pairs): result.add(key, val)
 
 
-proc `[]`*[A, B](t: OrderedTableRef[A, B], key: A): var B =
+proc `[]`*[A, B](t: OrderedTableRef[A, B], key: A): var B {.raises: KeyError.} =
   ## Retrieves the value at ``t[key]``.
   ##
   ## If ``key`` is not in ``t``, the  ``KeyError`` exception is raised.
@@ -2889,6 +2890,7 @@ iterator mvalues*[A](t: CountTableRef[A]): var int =
 
 
 
+{.pop.} # {.push raises: [].}
 
 when isMainModule:
   type
